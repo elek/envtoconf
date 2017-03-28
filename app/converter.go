@@ -3,7 +3,6 @@ package app
 import (
 	"strings"
 	"errors"
-
 )
 
 type Configfile struct {
@@ -28,8 +27,21 @@ func ParseKey(declaration string) (filename string, format string, key string, e
 		if len(declaration) > len(name) + len(extension) + 2 {
 			config_key = strings.TrimSpace(declaration[len(name) + len(extension) + 2:])
 		}
+
+		if strings.Contains(extension, "!") {
+			splitted := strings.FieldsFunc(extension, func(r rune) bool {
+				return r == '!'
+			})
+			extension = splitted[0]
+			format = splitted[1]
+			config_key = strings.TrimSpace(declaration[len(name) + len(extension) + len(format) + 3:])
+		} else {
+			format = extension
+		}
+
+	} else {
+		format = extension
 	}
-	format = extension
 	if _, ok := transformations[format]; extension != "" && ok {
 		return name + "." + extension, format, config_key, nil
 	} else {
@@ -39,7 +51,7 @@ func ParseKey(declaration string) (filename string, format string, key string, e
 
 func TransformToString(content map[string]string, format string) (string, error) {
 	if val, ok := transformations[format]; ok {
-		return val(content),nil
+		return val(content), nil
 	} else {
 		return "", errors.New("No such transformation " + format)
 	}

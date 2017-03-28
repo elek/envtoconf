@@ -19,6 +19,9 @@ func TestParseKeyValues(t *testing.T) {
 	}
 }
 
+
+
+
 func TestParseKey(t *testing.T) {
 
 	filename, format, configkey, err := ParseKey("CORE-SITE.XML_key.something")
@@ -30,6 +33,28 @@ func TestParseKey(t *testing.T) {
 	}
 
 	if format != "xml" {
+		t.Error("format has not been parsed well")
+	}
+
+	if configkey != "key.something" {
+		t.Error("Config key has not been parsed well")
+	}
+}
+
+
+
+
+func TestParseKeyWithOptional(t *testing.T) {
+
+	filename, format, configkey, err := ParseKey("CORE-SITE.XML!CONF_key.something")
+	if err != nil {
+		t.Error("Error during the config key parsing: " + err.Error())
+	}
+	if filename != "core-site.xml" {
+		t.Error("Filename has not been parsed well")
+	}
+
+	if format != "conf" {
 		t.Error("format has not been parsed well")
 	}
 

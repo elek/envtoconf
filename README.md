@@ -8,7 +8,9 @@ The environment should be in form:
 FILENAME.EXT_any.key=value
 ```
 
-The extracted key value pairs will be transformed to other formats based on the extension.
+The name of the file (with extension) will be converted to lowercase.
+
+The extracted key value pairs will be transformed to other formats based on the extension. 
 
 Supported formats/extensions:
 
@@ -17,4 +19,11 @@ Supported formats/extensions:
  * conf, sh: `export key=value` format
  * properties: `key: properties`
 
+Optional, the extension and the format could be different with the syntax:
+
+```
+FILENAME.EXT!FORMAT_any.key=value
+```
+
+With this syntax any filename with extension could be configured with a predefined format.
 
