@@ -65,11 +65,12 @@ func ParseKeyValues(envs map[string]string) map[string]Configfile {
 		filename, format, key, err := ParseKey(key)
 		if err == nil {
 			if configfile, ok := result[filename]; ok {
-				configfile.Entries[filename] = value
+				configfile.Entries[key] = value
 			} else {
 				cfg := Configfile{File: filename, Format: format, Entries: map[string]string{key: value}}
 				result[filename] = cfg
 			}
+
 		}
 	}
 	return result

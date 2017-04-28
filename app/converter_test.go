@@ -41,6 +41,26 @@ func TestParseKey(t *testing.T) {
 	}
 }
 
+func TestParseKeyLog4j(t *testing.T) {
+
+	filename, format, configkey, err := ParseKey("LOG4J.PROPERTIES_log4j.appender.stdout.layout.ConversionPattern")
+	if err != nil {
+		t.Error("Error during the config key parsing: " + err.Error())
+	}
+	if filename != "log4j.properties" {
+		t.Error("Filename has not been parsed well")
+	}
+
+	if format != "properties" {
+		t.Error("format has not been parsed well")
+	}
+
+	if configkey != "log4j.appender.stdout.layout.ConversionPattern" {
+		t.Error("Config key has not been parsed well")
+	}
+}
+
+
 
 
 
