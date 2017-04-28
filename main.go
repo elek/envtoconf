@@ -13,8 +13,8 @@ func main() {
 	var outputDir = flag.String("outputdir", "/tmp", "Directory where the configuration files are generated.")
 	flag.Parse()
 	environments := make(map[string]string)
-	for _, e := range os.Environ() {
-		pair := strings.Split(e, "=")
+	for _, e := range os.Environ(){
+		pair := strings.SplitN(e, "=", 2)
 		environments[pair[0]] = pair[1]
 	}
 	configfiles := app.ParseKeyValues(environments)
