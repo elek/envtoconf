@@ -32,3 +32,29 @@ func TestToYaml(t *testing.T) {
 	assert.Equal(t, expected, ToYaml(input), "Results are not the expected\n")
 
 }
+
+func TestToSh(t *testing.T) {
+	input := map[string]string{
+		"test.something.asd":"value1",
+		"test.something.bsd":"value2",
+		"test.other.bsd":"value3",
+	}
+	result := ToSh(input)
+	expected := "export test.something.asd=value1\nexport test.something.bsd=value2\nexport test.other.bsd=value3\n"
+
+	assert.Equal(t, expected, result, "Results are not the expected")
+
+}
+
+func TestToProperties(t *testing.T) {
+	input := map[string]string{
+		"test.something.asd":"value1",
+		"test.something.bsd":"value2",
+		"test.other.bsd":"value3",
+	}
+	result := ToProperties(input)
+	expected := "test.something.asd: value1\ntest.something.bsd: value2\ntest.other.bsd: value3\n"
+
+	assert.Equal(t, expected, result, "Results are not the expected")
+
+}
