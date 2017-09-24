@@ -1,9 +1,10 @@
 pipeline:
-  build:
+   build:
     image: golang
+    environment:
+       GOPATH: /go/src
     commands:
       - go get
       - go build
-      - go test
 
 
