@@ -58,3 +58,15 @@ func TestToProperties(t *testing.T) {
 	assert.Equal(t, expected, result, "Results are not the expected")
 
 }
+
+func TestToIni(t *testing.T) {
+	input := map[string]string{
+		"section1.some.key":"value1",
+		"section2.other.key":"value2",
+		"section1.yet.another":"value3",
+	}
+	result := ToIni(input)
+	expected := "[section1]\nsome.key=value1\nyet.another=value3\n\n[section2]\nother.key=value2\n\n"
+
+	assert.Equal(t, expected, result, "Results are not the expected")
+}
