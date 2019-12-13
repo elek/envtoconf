@@ -116,6 +116,32 @@ func ToProperties(keyvalues map[string]string) string {
 	return result
 }
 
+// Converts keyvalues to .ini format.  Section names are defined in each key's
+// first part (up to the first dot).  Keys without a section name are lumped
+// together at the beginning of output.
+func ToIni(keyvalues map[string]string) string {
+	sections := make(map[string]map[string]string)
+	outside_sections := make(map[string]string)
+	for key, value := range keyvalues {
+		parts := strings.SplitN(key, ".", 2)
+		if len(parts) == 2 {
+			title := parts[0]
+			key = parts[1]
+			if _, ok := sections[title]; !ok {
+				sections[title] = make(map[string]string)
+			}
+			sections[title][key] = value
+		} else {
+			outside_sections[key] = value
+		}
+	}
+	result := ToEnv(outside_sections)
+	for section, values := range sections {
+		result += fmt.Sprintf("[%s]\n", section) + ToEnv(values) + "\n"
+	}
+	return result
+}
+
 var transformations = map[string]Transformation{
 	"xml": ToXml,
 	"env": ToEnv,
@@ -124,5 +150,6 @@ var transformations = map[string]Transformation{
 	"conf": ToSh,
 	"yaml": ToYaml,
 	"yml": ToYaml,
+	"ini": ToIni,
 	"properties": ToProperties,
 }

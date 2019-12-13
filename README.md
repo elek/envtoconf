@@ -19,6 +19,11 @@ Supported formats/extensions:
  * conf, sh: `export key=value` format
  * yaml, yml: YAML format. Arrays supported with indexes as `key.value.1: 1` and `key.value.2: 2`
  * properties: `key: properties`
+ * ini: `section.key=value` format converted to:
+   ```
+   [section]
+   key=value
+   ```
 
 Optional, the extension and the format could be different with the syntax:
 
