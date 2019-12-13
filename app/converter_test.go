@@ -41,6 +41,25 @@ func TestParseKey(t *testing.T) {
 	}
 }
 
+func TestParseKeyYaml(t *testing.T) {
+
+	filename, format, configkey, err := ParseKey("STORM.YAML_storm.zookeeper.servers.0")
+	if err != nil {
+		t.Error("Error during the config key parsing: " + err.Error())
+	}
+	if filename != "storm.yaml" {
+		t.Error("Filename has not been parsed well")
+	}
+
+	if format != "yaml" {
+		t.Error("format has not been parsed well")
+	}
+
+	if configkey != "storm.zookeeper.servers.0" {
+		t.Error("Config key has not been parsed well")
+	}
+}
+
 func TestParseKeyLog4j(t *testing.T) {
 
 	filename, format, configkey, err := ParseKey("LOG4J.PROPERTIES_log4j.appender.stdout.layout.ConversionPattern")
